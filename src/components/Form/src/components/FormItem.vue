@@ -223,7 +223,11 @@
           [eventKey]: (...args: Nullable<Recordable>[]) => {
             const [e] = args;
             if (propsData[eventKey]) {
-              propsData[eventKey](...args);
+              if (typeof propsData[eventKey] === 'string') {
+                eval(propsData[eventKey])(...args);
+              } else {
+                propsData[eventKey](...args);
+              }
             }
             const target = e ? e.target : null;
             const value = target ? (isCheck ? target.checked : target.value) : e;
